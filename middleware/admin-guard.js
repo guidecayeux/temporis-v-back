@@ -1,8 +1,9 @@
-const checkIsAdmin = (db) => {
+const axios = require("axios");
+const checkWhiteList = (db) => {
   return function (req, res, next) {
-    checkAuthorization(db, req.decoded)
+    checkTwitchAuth(db, req)
       .then((value) => {
-        if (value) {
+        if (['wiig0'].includes(value.data.login)) {
           next();
         } else {
           res.status(401).send({
@@ -21,18 +22,22 @@ const checkIsAdmin = (db) => {
   }
 };
 
-const checkAuthorization = (db, jwtDecoded) => {
+const checkTwitchAuth = (db, req) => {
   return new Promise(async (resolve, reject) => {
-    console.log('jwt', jwtDecoded);
-    if (jwtDecoded && jwtDecoded.email) {
-      resolve(true)
-    } else {
-      reject('utilisateur non connu');
-    }
+    await axios.get('https://id.twitch.tv/oauth2/validate', {
+      headers: {
+        'authorization': req.headers.authorization
+      }
+    }).then(response => {
+      resolve(response);
+    }).catch((err) => {
+      console.log('error ',  err);
+      reject('Token non valid');
+    })
   });
 };
 
 module.exports = {
-  checkIsAdmin: checkIsAdmin,
-  checkAuthorization: checkAuthorization
+  checkWhiteList: checkWhiteList,
+  checkTwitchAuth: checkTwitchAuth
 };

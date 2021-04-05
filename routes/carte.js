@@ -1,6 +1,5 @@
 const express = require('express');
 const {valider} = require('../model/carte');
-const jwt = require('../middleware/jwt');
 const adminGuard = require('../middleware/admin-guard');
 const history = require('../middleware/history');
 const cartes = require('../mock/cartes.json')
@@ -8,7 +7,7 @@ const cartes = require('../mock/cartes.json')
 const router = express.Router();
 
 
-router.get('/cartes', async (req, res, next) => {
+router.get('/liste', async (req, res, next) => {
     // await db.collection('members').find({}).toArray((err, members) => {
     //     if (err) {
     //         next(err);
@@ -22,7 +21,7 @@ router.get('/cartes', async (req, res, next) => {
     res.status(200).send(cartes);
 });
 
-router.post('/carte', jwt.checkToken, adminGuard.checkIsAdmin('db'), history.saveInHistory('Créer utilisateur', 'db'), async (req, res, next) => {
+router.post('/add', adminGuard.checkWhiteList('db'), history.saveInHistory('Créer utilisateur', 'db'), async (req, res, next) => {
     const result = valider(req.body);
     if (result.error === null) {
         const carte = req.body;

@@ -4,9 +4,9 @@ const objetRouter = require('./objet');
 const carteRouter = require('./carte');
 const recetteRouter = require('./recette');
 
-router.use('/', objetRouter);
-router.use('/', carteRouter);
-router.use('/', recetteRouter);
+router.use('/objets', objetRouter);
+router.use('/cartes', carteRouter);
+router.use('/recettes', recetteRouter);
 
 /* GET users listing. */
 router.get('/version', function(req, res, next) {
