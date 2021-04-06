@@ -21,7 +21,7 @@ const schemaCreation = Joi.object().keys({
             'Consommable',
             'Level Up',
             'Autre').required().label(`Le type est obligatoire et doit faire parti de la liste valide`),
-    url: Joi.string()
+    img: Joi.string()
 });
 
 const valider = (member) => {

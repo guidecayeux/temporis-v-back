@@ -10,8 +10,15 @@ const schemaCreation = Joi.object().keys({
     idCarte5: Joi.number().required().label(`L'id de la carte 5 est obligatoire`),
 });
 
+const schemaRecherche = Joi.object().keys({
+    idCartes:Joi.array().min(1).max(5).items(Joi.number())
+});
+
 const valider = (member) => {
     return Joi.validate(member, schemaCreation);
 };
+const validerRecherche = (body) => {
+    return Joi.validate(body, schemaRecherche);
+};
 
-module.exports = {valider};
+module.exports = {valider, validerRecherche};
