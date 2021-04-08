@@ -3,7 +3,7 @@ const checkWhiteList = (db) => {
   return function (req, res, next) {
     checkTwitchAuth(db, req)
       .then((value) => {
-        if (['wiig0'].includes(value.data.login)) {
+        if (['wiig0', 'Zrewak'].includes(value.data.login)) {
           next();
         } else {
           res.status(401).send({

@@ -17,7 +17,7 @@ const schemaCreation = Joi.object().keys({
             'Dofus',
             'Sac à dos',
             'Trophée',
-            'Idoles',
+            'Idole',
             'Consommable',
             'Level Up',
             'Autre').required().label(`Le type est obligatoire et doit faire parti de la liste valide`),
