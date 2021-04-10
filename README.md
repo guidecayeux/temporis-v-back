@@ -22,6 +22,8 @@ npm i
 npm run start
 ```
 
+Le serveur se lance sur http://localhost:3000/.
+
 En local, vous pouvez changer les logs de la BDD dans le fichier `/db/index.js`.   
 La whitelist des pseudos twitch ayant le droit d'edit est dans `/middleware/admin-guard.js`
 
