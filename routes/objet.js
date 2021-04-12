@@ -45,7 +45,8 @@ router.get('/search/:id', async (req, res, next) => {
 router.get('/liste', async (req, res, next) => {
     db.query(`SELECT objet.id, objet.name, objet.type, objet.lvl FROM objet 
                     INNER JOIN recette
-                    ON objet.id = recette.id_objet`, undefined , (err, response) => {
+                    ON objet.id = recette.id_objet
+                    GROUP BY objet.id`, undefined , (err, response) => {
         if (err) {
             return next(err);
         }
