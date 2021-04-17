@@ -17,7 +17,7 @@ const saveInHistory = (action) => {
                   if (!req.body) {
                       msg += 'Création de la recette ¤{RECETTE INCONNU}¤';
                   } else {
-                      msg += `Création de la recette ¤objet ${req.body.idObjet} et cartes ${req.body.idCarte1} + ${req.body.idCarte2} + ${req.body.idCarte3} + ${req.body.idCarte4} + ${req.body.idCarte5}¤`;
+                      msg += `Création de la recette ¤${req.body.nameObjet} || ${req.body.nameCarte1} + ${req.body.nameCarte2} + ${req.body.nameCarte3} + ${req.body.nameCarte4} + ${req.body.nameCarte5}¤`;
                   }
                   break;
           }
