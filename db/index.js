@@ -11,16 +11,16 @@ const pool = new Pool({
     host: process.env.DB_HOST,
     database: process.env.DB_NAME,
     password: process.env.DB_PWD,
-    port: process.env.DB_PORT,
+    port: Number(process.env.DB_PORT),
 })
 
 module.exports = {
     query: (text, params, callback) => {
-        const start = Date.now()
         return pool.query(text, params, (err, res) => {
-            const duration = Date.now() - start
-            console.log('executed query', { text, duration, rows: res })
-            callback(err, res)
+            if (process.env.LOG_LVL === 'DEBUG') {
+                console.log('executed query', { text, rows: res });
+            }
+            callback(err, res);
         })
     }
 }

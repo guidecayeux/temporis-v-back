@@ -1,8 +1,8 @@
 const Joi = require('@hapi/joi');
-Joi.objectId = require('joi-objectid')(Joi);
+const {regexName} = require('./util');
 
-const schemaCreation = Joi.object().keys({
-    name: Joi.string().required().label(`Le nom est obligatoire`),
+const schemaCreation = Joi.object({
+    name: Joi.string().pattern(regexName).required().label(`Le nom est obligatoire`),
     lvl: Joi.number().required().label(`Le lvl est obligatoire`),
     type: Joi.string().required()
         .valid(
@@ -25,7 +25,7 @@ const schemaCreation = Joi.object().keys({
 });
 
 const valider = (member) => {
-    return Joi.validate(member, schemaCreation);
+    return schemaCreation.validate(member);
 };
 
 module.exports = {valider};

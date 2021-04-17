@@ -1,3 +1,11 @@
+const CREATE = {
+    OBJET: 'OBJET',
+    RECETTE: 'RECETTE',
+    CARTE: 'CARTE'
+}
+
+const regexName = new RegExp('^(?!.*¤).*$')
+
 function sanitizeString(name) {
     name = name.replace(';', ' ');
     name = name.replace(',', ' ');
@@ -19,5 +27,5 @@ function buildCarteList(listEntree) {
     })
 }
 
-module.exports = { sanitizeString, buildCarteList }
+module.exports = { sanitizeString, buildCarteList, CREATE, regexName}
 

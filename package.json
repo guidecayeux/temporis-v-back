@@ -3,10 +3,11 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www"
+    "start": "node ./bin/www",
+    "start:windows": "SET DB_USER=postgres&&SET DB_HOST=localhost&&SET DB_NAME=postgres&&SET DB_PWD=root&&SET DB_PORT=5432&&SET LOG_LVL=DEBUG&&SET WHITELIST=['wiig0', 'Zrewak']&&node ./bin/www"
   },
   "dependencies": {
-    "@hapi/joi": "^15.0.3",
+    "@hapi/joi": "^17.1.1",
     "@hapi/joi-date": "^1.3.0",
     "axios": "^0.21.1",
     "cookie-parser": "~1.4.4",

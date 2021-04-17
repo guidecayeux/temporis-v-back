@@ -2,11 +2,12 @@ const axios = require("axios");
 
 // whitelist = ['wiig0', 'Zrewak'];
 whitelist = process.env.WHITELIST;
-const checkWhiteList = (db) => {
+const checkWhiteList = () => {
   return function (req, res, next) {
-    checkTwitchAuth(db, req)
-      .then((value) => {
-        if (whitelist && whitelist.includes(value.data.login)) {
+    checkTwitchAuth(req)
+      .then((user) => {
+        if (whitelist && whitelist.includes(user.data.login)) {
+          req.userLogin = user.data.login;
           next();
         } else {
           res.status(401).send({
@@ -16,7 +17,9 @@ const checkWhiteList = (db) => {
         }
       })
       .catch((err) => {
-        console.log('error lors du check authorization', err);
+        if (process.env.LOG_LVL === 'DEBUG' || process.env.LOG_LVL === 'ERROR') {
+          console.log('error lors du check authorization', err);
+        }
         res.status(401).send({
           message: `Opération invalide`,
           error: err,
@@ -25,7 +28,7 @@ const checkWhiteList = (db) => {
   }
 };
 
-const checkTwitchAuth = (db, req) => {
+const checkTwitchAuth = (req) => {
   return new Promise(async (resolve, reject) => {
     await axios.get('https://id.twitch.tv/oauth2/validate', {
       headers: {
@@ -34,7 +37,9 @@ const checkTwitchAuth = (db, req) => {
     }).then(response => {
       resolve(response);
     }).catch((err) => {
-      console.log('error ',  err);
+      if (process.env.LOG_LVL === 'DEBUG' || process.env.LOG_LVL === 'ERROR') {
+        console.log('error ', err);
+      }
       reject('Token non valid');
     })
   });
