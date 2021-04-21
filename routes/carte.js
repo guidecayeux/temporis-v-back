@@ -9,7 +9,7 @@ const router = express.Router();
 
 
 router.get('/liste', async (req, res, next) => {
-    db.query('SELECT * FROM carte', undefined , (err, response) => {
+    db.query('SELECT * FROM carte ORDER BY name', undefined , (err, response) => {
         if (err) {
             if (process.env.LOG_LVL === 'DEBUG' || process.env.LOG_LVL === 'ERROR') {
                 console.log('Erreur lors de la récupération des cartes', err);
