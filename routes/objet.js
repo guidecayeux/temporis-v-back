@@ -10,7 +10,7 @@ const router = express.Router();
 
 
 router.get('/autocomplete/:query', check(), async (req, res, next) => {
-    db.query(`SELECT * FROM objet WHERE UPPER(name) LIKE '%' || UPPER($1) || '%'`, [req.params.query], (err, response) => {
+    db.query(`SELECT * FROM objet WHERE UPPER(name) LIKE '%' || UPPER($1) || '%' ORDER BY UPPER(name)`, [req.params.query], (err, response) => {
         if (err) {
             if (process.env.LOG_LVL === 'DEBUG' || process.env.LOG_LVL === 'ERROR') {
                 console.log(`Erreur lors de l'autocomplete objet`, req.params, err);
@@ -52,7 +52,8 @@ router.get('/liste', async (req, res, next) => {
     db.query(`SELECT objet.id, objet.name, objet.type, objet.lvl FROM objet 
                     INNER JOIN recette
                     ON objet.id = recette.id_objet
-                    GROUP BY objet.id`, undefined , (err, response) => {
+                    GROUP BY objet.id
+                    ORDER BY UPPER(objet.name)`, undefined , (err, response) => {
         if (err) {
             if (process.env.LOG_LVL === 'DEBUG' || process.env.LOG_LVL === 'ERROR') {
                 console.log(`Erreur lors de la récupération des objets`, err);
